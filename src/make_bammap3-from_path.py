@@ -27,6 +27,7 @@ if __name__ == "__main__":
     # Evaluatee whether merged completely, what was not merged
     vc = bams['_merge'].value_counts()
     if ( vc["left_only"] > 0): 
+        pd.options.display.max_colwidth = 1000  # allow long strings to be printed
         m = bams['_merge'] == "left_only" 
         print("WARNING: " + str(vc["left_only"]) + " unknown filenames:")
         print(bams.loc[m, "filename"])
