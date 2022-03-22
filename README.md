@@ -1,49 +1,12 @@
-Writing catalog
+Design for general purpose BamMap maker for GDC data which has been downloaded 
+by a non-CPTAC3-style process.  Matching of downloaded data to metadata is done
+by filename match to catalog.  
 
-# SampleMap columns
-     1	File Name	TWFU-CPT0002270014-Y1N1Z1_1Bn1_1_S2_L002_R1_001.fastq.gz
-     2	Flow Cell ID	H7JNJDSX3
-     3	Index Sequence	GCGGGTAAGT+TAGCACTAAG
-     4	Lane Number	2
-     5	Read Number	1
-     6	Sample Name	TWFU-CPT0002270014-Y1N1Z1_1Bn1_1
-     7	Species	Human
-     8	Tissue Type
-     9	Library Type	cdna library
-    10	Library Name	TWFU-CPT0002270014-Y1N1Z1_1Bn1_1
-    11	Completion Date	2022-01-27
-    12	Total Bases Kb	"9755585.0"
-    13	% PF Clusters	74.07
-    14	Avg QScore	35.96
-    15	% > Q30	93.8
-    16	% Phix Error Rate
-    17	Protocol	10x_SC_3'_GEX_V3.1
+In general, it is preferred to avoid filename matching.  Better ways of generating
+data is to have UUID known and match on that to Catalog file metadata.
 
-# Catalog V3 columns
-```
-    header = [ 'dataset_name', 'case', 'disease', 'experimental_strategy', 'sample_type', 'specimen_name', 'filename',
-        'filesize', 'data_format', 'data_variety', 'alignment', 'project', 'uuid', 'md5', 'metadata']
-```
+* Only a list of paths of BAM files is passed as a filename argument
+* System is specified as per-run
+* It is assumed that the filename of downloaded data is not modified
 
-'dataset_name' = sm[1] = sm['File Name']
-'case' = sm[6] = sm['Sample Name']
-'disease' = as passed by argument
-'experimental_strategy' = NA
-'sample_type' = NA
-'specimen_name' = sm[6] = sm['Sample Name']
-'filename' = sm[1] = sm['File Name']
-'filesize' = NA
-'data_format' = FASTQ
-'data_variety' = NA
-'alignment' = NA
-'project' = as passed by argument
-'uuid' = matched from BamMap
-'md5' = NA
-'metadata' = 
-    lane = sm['Lane Number'], 
-    read = sm['Read Number'], 
-    library type = sm['Library Type'], 
-    protocol = sm['Protocol'],
-    download_id  = passed
-    batch_name = passed
-
+Examples are TCGA files Jay downloaded
