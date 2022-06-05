@@ -20,11 +20,13 @@ Writing catalog
     17	Protocol	10x_SC_3'_GEX_V3.1
 
 # Catalog V3 columns
+[Catalog V3 File Format definition](https://docs.google.com/document/d/1uSgle8jiIx9EnDFf_XHV3fWYKFElszNLkmGlht_CQGE/edit)
+
 ```
     header = [ 'dataset_name', 'case', 'disease', 'experimental_strategy', 'sample_type', 'specimen_name', 'filename',
         'filesize', 'data_format', 'data_variety', 'alignment', 'project', 'uuid', 'md5', 'metadata']
 ```
-
+```
 'dataset_name' = sm[1] = sm['File Name']
 'case' = sm[6] = sm['Sample Name']
 'disease' = as passed by argument
@@ -46,4 +48,4 @@ Writing catalog
     protocol = sm['Protocol'],
     download_id  = passed
     batch_name = passed
-
+```
