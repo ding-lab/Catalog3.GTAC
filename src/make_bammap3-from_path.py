@@ -9,6 +9,7 @@ if __name__ == "__main__":
     parser.add_argument("-C", "--catalog", required=True, help="Path to corresponding Catalog3 file")
     parser.add_argument("-S", "--system", required=True, help="System name")
     parser.add_argument("-o", "--output", dest="outfn", required=True, help="Output BamMap file name")
+    parser.add_argument("-U", "--unmatched", dest="unmatchedfn", help="Name of output file containing paths which did not match to Catalog")
     parser.add_argument("-d", "--debug", action="store_true", help="Print debugging information to stderr")
     parser.add_argument("-n", "--no-header", action="store_true", help="Do not print header")
 
@@ -29,9 +30,13 @@ if __name__ == "__main__":
     if ( vc["left_only"] > 0): 
         pd.options.display.max_colwidth = 1000  # allow long strings to be printed
         m = bams['_merge'] == "left_only" 
-        print("WARNING: " + str(vc["left_only"]) + " unknown filenames:")
+        print("WARNING: " + str(vc["left_only"]) + " unmatched filenames:")
         print(bams.loc[m, "filename"])
-        print("These will be ignored")
+        if args.unmatchedfn is not None:
+            bams.loc[m, "filename"].to_csv(args.unmatchedfn, sep="\t", index=False)
+            print("Writing unmatched filenames to " + args.unmatchedfn)
+        else:
+            print("These will be ignored")
 
     print(str(vc["both"]) + " filenames successfully matched to catalog")
     m = bams['_merge'] == "both" 
